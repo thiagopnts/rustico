@@ -1,4 +1,4 @@
-# Kernewbie
+# Rustic
 
 A tiny 32 bit kernel written in Rust.
 
@@ -10,7 +10,7 @@ It prints 'olar mundo' then hangs. That's it:
 
 ## Setup
 
-You need a few things to run kernewbie:
+You need a few things to run rustic:
 
 1. `qemu`
 2. a cross-compiler for i386

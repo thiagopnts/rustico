@@ -44,13 +44,10 @@ then:
 $ brew install binutils
 ```
 
-To get edge Rust going, grab it from git:
+install latest Rust:
 
 ```bash
-$ git clone https://github.com/mozilla/rust
-$ cd rust
-$ ./configure
-$ make && make install
+brew install rust --HEAD
 ```
 
 ## Running it

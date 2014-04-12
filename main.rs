@@ -2,8 +2,9 @@
 #![allow(ctypes)]
 #![no_std]
 
+extern crate core;
 
-mod zero;
+use core::str::as_bytes;
 
 static VGA_ADDRESS: uint = 0xb8000;
 static VGA_WIDTH: u16 = 80;

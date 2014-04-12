@@ -14,7 +14,8 @@ all: floppy.img
 .PHONY: clean run
 
 .rs.o:
-	$(RUSTC) -O --target i386-intel-linux --crate-type lib --emit=obj -o $@ $<
+	$(RUSTC) --target i386-intel-linux --out-dir rust-core -O -Z no-landing-pads  rust-core/core/lib.rs
+	$(RUSTC) -O --target i386-intel-linux --crate-type lib --emit=obj -o $@ $< -L rust-core/
 
 .asm.o:
 	$(NASM) -f elf32 -o $@ $<

@@ -1,4 +1,4 @@
-#![crate_id = "kernewbie#0.0"]
+#![crate_id = "rustic#0.0"]
 #![allow(ctypes)]
 #![no_std]
 

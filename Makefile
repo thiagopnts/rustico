@@ -20,15 +20,13 @@ all: floppy.img
 .asm.o:
 	$(NASM) -f elf32 -o $@ $<
 
-main.rs: zero.rs
-
 floppy.img: loader.bin main.bin
 	cat $^ > $@
 
 loader.bin: loader.asm
 	$(NASM) -o $@ -f bin $<
 
-main.bin: linker.ld runtime.o main.o
+main.bin: linker.ld runtime.o lib.o
 	$(LD) -o $@ -T $^
 
 run: floppy.img

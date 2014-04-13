@@ -8,6 +8,7 @@ extern crate core;
 #[path = "arch/x86/"]
 mod platform {
   pub mod drivers;
+  pub mod io;
 }
 
 pub mod kernel;

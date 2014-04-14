@@ -1,34 +1,33 @@
-use platform::drivers::vga;
-
+use platform::drivers::vga::{ADDRESS, WIDTH, HEIGHT, make_vgaentry, fg_color, bg_color, curr_x, curr_y};
 use core::option::{Some, None};
 use core::{slice, str};
 use core::iter::Iterator;
 
 pub fn putc(c: u8) {
   unsafe {
-    putchar(vga::curr_x, vga::curr_y, c);
-    vga::curr_x += 1;
-    if vga::curr_x > vga::WIDTH {
-        vga::curr_x -= vga::WIDTH;
-        vga::curr_y += 1;
+    putchar(curr_x, curr_y, c);
+    curr_x += 1;
+    if curr_x > WIDTH {
+        curr_x -= WIDTH;
+        curr_y += 1;
     }
   }
 }
 
 pub fn putchar(x: u16, y: u16, c: u8) {
-  if x >= vga::WIDTH || y >= vga::HEIGHT {
+  if x >= WIDTH || y >= HEIGHT {
     return;
   }
-  let idx : uint =  (y * vga::WIDTH * 2 + x * 2) as uint;
+  let idx : uint =  (y * WIDTH * 2 + x * 2) as uint;
   unsafe {
-    *((vga::ADDRESS + idx) as *mut u16) = vga::make_vgaentry(c, vga::fg_color, vga::bg_color);
+    *((ADDRESS + idx) as *mut u16) = make_vgaentry(c, fg_color, bg_color);
   }
 }
 
 pub fn newline() {
   unsafe {
-    vga::curr_x = 0;
-    vga::curr_y += 1;
+    curr_x = 0;
+    curr_y += 1;
   }
 }
 

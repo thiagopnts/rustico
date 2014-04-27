@@ -1,10 +1,12 @@
 use core::option::{Some, None};
+use core::mem::transmute;
 use core::{str, slice};
 use core::iter::Iterator;
 
 pub static ADDRESS: uint = 0xb8000;
 pub static WIDTH: u16 = 80;
-pub static HEIGHT: u16 = 80;
+pub static HEIGHT: u16 = 25;
+pub static SCREEN_SIZE: u16 = WIDTH * HEIGHT;
 
 pub static mut curr_x: u16 = 0;
 pub static mut curr_y: u16 = 0;
@@ -30,6 +32,30 @@ pub enum Color {
     Yellow      = 14,
     White       = 15,
 }
+
+// The screen resolution is 80x25, the root address is 0xb8000
+type VGA = [Char, ..SCREEN_SIZE];
+
+struct Display {
+  screen: *mut VGA
+}
+
+
+pub static DISPLAY: Display = Display { screen: ADDRESS as *mut VGA };
+
+// One char in the screen is composed by 2 bytes, 1 byte for the character itself
+// and another for styling(foreground and background).
+pub struct Char {
+  pub char: u8,
+  style: u8, // 4 bits for foreground and 4 bits for background
+}
+
+impl Char {
+  pub fn new(c: char, fg: Color, bg: Color) -> Char {
+    Char { char: c as u8, style: fg as u8 | (bg as u8 << 4) }
+  }
+}
+
 
 fn range(lo: uint, hi: uint, it: |uint| -> ()) {
     let mut iter = lo;

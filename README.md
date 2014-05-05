@@ -42,10 +42,10 @@ then:
 $ brew install binutils
 ```
 
-install latest Rust:
+install Rust 0.10:
 
 ```bash
-brew install rust --HEAD
+brew install rust
 ```
 
 ## Running it

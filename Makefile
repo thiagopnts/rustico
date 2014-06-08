@@ -5,7 +5,7 @@ RUSTC=rustc
 NASM=nasm
 QEMU=qemu-system-i386
 
-all: floppy.img
+all: arch/x86/boot/floppy.img
 
 .SUFFIXES:
 
@@ -20,17 +20,17 @@ all: floppy.img
 .asm.o:
 	$(NASM) -f elf32 -o $@ $<
 
-floppy.img: loader.bin main.bin
+arch/x86/boot/floppy.img: arch/x86/boot/loader.bin arch/x86/boot/main.bin
 	cat $^ > $@
 
-loader.bin: loader.asm
+arch/x86/boot/loader.bin: arch/x86/boot/loader.asm
 	$(NASM) -o $@ -f bin $<
 
-main.bin: linker.ld runtime.o lib.o
+arch/x86/boot/main.bin: arch/x86/boot/linker.ld runtime.o lib.o
 	$(LD) -o $@ -T $^
 
-run: floppy.img
+run: arch/x86/boot/floppy.img
 	$(QEMU) -fda $<
 
 clean:
-	rm -f *.bin *.o *.img
+	rm -f arch/x86/boot/*.bin arch/x86/boot/*.o arch/x86/boot/*.img

@@ -2,6 +2,7 @@ use platform::drivers::vga::{ADDRESS, WIDTH, HEIGHT, make_vgaentry, fg_color, bg
 use core::option::{Some, None};
 use core::{slice, str};
 use core::iter::Iterator;
+use core::str::StrSlice;
 
 pub fn putc(c: u8) {
   unsafe {
@@ -32,8 +33,8 @@ pub fn newline() {
 }
 
 pub fn write(s: &str) {
-  for b in slice::iter(str::as_bytes(s)) {
-    putc(*b);
+  for b in s.bytes() {
+    putc(b);
   }
 }
 

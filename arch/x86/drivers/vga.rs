@@ -1,4 +1,5 @@
-use core::option::{Some, None};
+
+use core::option::*;
 use core::mem::transmute;
 use core::{str, slice};
 use core::iter::Iterator;

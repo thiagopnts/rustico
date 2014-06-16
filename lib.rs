@@ -1,5 +1,7 @@
 #![crate_id = "rustic#0.0"]
 #![allow(ctypes)]
+#![feature(globs)]
+#![crate_type="lib"]
 #![no_std]
 
 extern crate core;
@@ -13,3 +15,10 @@ mod platform {
 
 pub mod kernel;
 
+#[lang = "begin_unwind"]
+extern fn begin_unwind(args: &core::fmt::Arguments, file: &str, line: uint) -> ! {
+  loop {}
+}
+
+#[lang = "stack_exhausted"] extern fn stack_exhausted() {}
+#[lang = "eh_personality"] extern fn eh_personality() {}

@@ -13,7 +13,7 @@ You need a few things to run rustic:
 1. `qemu`
 2. a cross-compiler for i386
 3. `nasm`
-4. Rust's `master` branch or 0.10 release.
+4. Rust's `master` branch.
 
 ### OSX
 
@@ -42,10 +42,10 @@ then:
 $ brew install binutils
 ```
 
-install Rust 0.10:
+install Rust HEAD:
 
 ```bash
-brew install rust
+brew install rust --HEAD
 ```
 
 ## Running it
@@ -61,3 +61,18 @@ To run,
 ```bash
 $ make run
 ```
+
+NOTE: It now uses libcore instead of rust-core for freestanding idiomatic rust. Libcore is now part of the default rust lib,
+but in order to use it you will have to compile it to the target architecture(currently i386-intel-linux), to do it you must
+compile from rust source and move to your rustlib dir:
+
+first create our architecture specific dir:
+
+`mkdir -p /usr/local/lib/rustlib/i386-intel-linux/lib`
+
+then compile libcore for our new target:
+
+`rustc --target i386-intel-linux -O -Z no-landing-pads src/libcore/lib.rs --out-dir /usr/local/lib/rustlib/i386-intel-linux/lib`
+
+Now you will be able to cross compile rust.
+

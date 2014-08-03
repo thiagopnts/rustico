@@ -76,3 +76,4 @@ then compile libcore for our new target:
 
 Now you will be able to cross compile rust.
 
+NOTE2: this probably doesnt run on rust's HEAD anymore.

@@ -1,5 +1,4 @@
 #![crate_name = "rustic"]
-#![crate_version = "0.0.0"]
 #![allow(ctypes)]
 #![feature(globs)]
 #![feature(lang_items)]

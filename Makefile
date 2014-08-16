@@ -33,3 +33,4 @@ run: arch/x86/boot/floppy.img
 
 clean:
 	rm -f arch/x86/boot/*.bin arch/x86/boot/*.o arch/x86/boot/*.img
+	rm lib.o

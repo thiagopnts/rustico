@@ -17,7 +17,7 @@ all: arch/x86/boot/floppy.img
 	$(RUSTC) -O --target i386-intel-linux -Z no-landing-pads --crate-type lib --emit=obj -o $@ $< 
 
 .asm.o:
-	$(NASM) -f elf32 -o $@ $<
+	$(NASM) -f elf32 $< -o $@
 
 arch/x86/boot/floppy.img: arch/x86/boot/loader.bin arch/x86/boot/main.bin
 	cat $^ > $@
@@ -25,7 +25,7 @@ arch/x86/boot/floppy.img: arch/x86/boot/loader.bin arch/x86/boot/main.bin
 arch/x86/boot/loader.bin: arch/x86/boot/loader.asm
 	$(NASM) -o $@ -f bin $<
 
-arch/x86/boot/main.bin: arch/x86/boot/linker.ld arch/x86/boot/runtime.o lib.o
+arch/x86/boot/main.bin: arch/x86/boot/linker.ld runtime.o lib.o
 	$(LD) -o $@ -T $^
 
 run: arch/x86/boot/floppy.img

@@ -29,7 +29,9 @@ arch/x86/boot/main.bin: arch/x86/boot/linker.ld runtime.o lib.o
 	$(LD) -o $@ -T $^
 
 run: arch/x86/boot/floppy.img
-	$(QEMU) -fda $<
+	tmux split-window -h "$(QEMU) -fda $< -curses -monitor telnet:localhost:4444,server -s -S"
+	tmux select-pane -L
+	telnet localhost 4444
 
 clean:
 	rm -f arch/x86/boot/*.bin arch/x86/boot/*.o arch/x86/boot/*.img

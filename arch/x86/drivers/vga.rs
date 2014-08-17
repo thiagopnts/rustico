@@ -7,7 +7,7 @@ use core::iter::range;
 pub static ADDRESS: uint = 0xb8000;
 pub static WIDTH: u16 = 80;
 pub static HEIGHT: u16 = 25;
-pub static SCREEN_SIZE: uint = WIDTH * HEIGHT;
+pub static SCREEN_SIZE: uint = WIDTH as uint * HEIGHT as uint;
 
 pub static mut curr_x: u16 = 0;
 pub static mut curr_y: u16 = 0;

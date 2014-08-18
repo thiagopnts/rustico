@@ -98,7 +98,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sudo apt-get install python-software-properties -y
     sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
     sudo apt-get update
-    sudo apt-get install nasm make build-essential grub qemu zip curl vim git-core gcc-4.7 g++-4.7 tmux -y
+    sudo apt-get install nasm make build-essential grub qemu zip curl vim git-core gcc-4.7 g++-4.7 tmux libncurses5-dev -y
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.6
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
     echo 2 | sudo update-alternatives --config gcc

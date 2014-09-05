@@ -6,12 +6,11 @@ NASM=nasm
 NASMFLAGS=-f elf -o
 QEMU=qemu-system-i386
 
-.PHONY: clean
+.PHONY: run clean
 
-run: arch/x86/boot/floppy.img
-	tmux split-window -h "$(QEMU) -fda $< -curses -monitor telnet:localhost:4444,server -s -S"
+run: disk.img
+	tmux split-window -h "$(QEMU) -hda $< -curses -monitor telnet:localhost:4444,server -s -S"
 	tmux select-pane -L
-	telnet localhost 4444
 
 clean:
 	rm -f arch/x86/boot/*.bin arch/x86/boot/*.o arch/x86/boot/*.img
@@ -20,8 +19,12 @@ clean:
 kernel: arch/x86/boot/start.o lib.o
 	$(LD) $(LDFLAGS) arch/x86/boot/new_linker.ld -o $@.elf $^
 
+disk.img: kernel
+	sudo mount -o loop,offset=32256 disk.img /mnt
+	sudo mv kernel.elf /mnt/
+	sudo umount /mnt
+
 %.o: %.asm
-	@echo ae
 	$(NASM) $(NASMFLAGS) $@ $<
 
 %.o: %.rs

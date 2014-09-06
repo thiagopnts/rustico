@@ -11,6 +11,8 @@ QEMU=qemu-system-i386
 run: disk.img
 	tmux split-window -h "$(QEMU) -hda $< -curses -monitor telnet:localhost:4444,server -s -S"
 	tmux select-pane -L
+	sleep 1
+	telnet localhost 4444
 
 clean:
 	rm -f arch/x86/boot/*.bin arch/x86/boot/*.o arch/x86/boot/*.img

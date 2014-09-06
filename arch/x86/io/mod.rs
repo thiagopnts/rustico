@@ -1,4 +1,4 @@
-use platform::drivers::vga::{ADDRESS, WIDTH, HEIGHT, Char, make_vgaentry, curr_x, curr_y};
+use platform::drivers::vga::{ADDRESS, WIDTH, HEIGHT, Char, display};
 use core::option::{Some, None};
 use core::{slice, str};
 use core::iter::Iterator;
@@ -6,29 +6,20 @@ use core::str::StrSlice;
 
 pub fn putc(c: u8) {
   unsafe {
-    putchar(curr_x, curr_y, c);
-    curr_x += 1;
-    if curr_x > WIDTH {
-        curr_x -= WIDTH;
-        curr_y += 1;
-    }
+    putchar(c);
   }
 }
 
-pub fn putchar(x: u16, y: u16, c: u8) {
-  if x >= WIDTH || y >= HEIGHT {
-    return;
-  }
-  let idx : uint =  (y * WIDTH * 2 + x * 2) as uint;
-  unsafe {
-    *((ADDRESS + idx) as *mut u16) = make_vgaentry(Char::new_char(c as char));
-  }
+pub fn putchar(c: u8) {
+    //FIXME an static mutable struct is unsafe, I have to figure out
+    // how to make a proper singleton(or something equivalent)
+    unsafe { display.putchar(Char::new_char(c as char)); }
 }
 
 pub fn newline() {
   unsafe {
-    curr_x = 0;
-    curr_y += 1;
+    display.x = 0;
+    display.y += 1;
   }
 }
 

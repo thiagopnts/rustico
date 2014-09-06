@@ -1,4 +1,4 @@
-use platform::drivers::vga::{ADDRESS, WIDTH, HEIGHT, make_vgaentry, fg_color, bg_color, curr_x, curr_y};
+use platform::drivers::vga::{ADDRESS, WIDTH, HEIGHT, Char, make_vgaentry, curr_x, curr_y};
 use core::option::{Some, None};
 use core::{slice, str};
 use core::iter::Iterator;
@@ -21,7 +21,7 @@ pub fn putchar(x: u16, y: u16, c: u8) {
   }
   let idx : uint =  (y * WIDTH * 2 + x * 2) as uint;
   unsafe {
-    *((ADDRESS + idx) as *mut u16) = make_vgaentry(c, fg_color, bg_color);
+    *((ADDRESS + idx) as *mut u16) = make_vgaentry(Char::new_char(c as char));
   }
 }
 

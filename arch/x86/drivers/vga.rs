@@ -12,8 +12,8 @@ pub static SCREEN_SIZE: uint = WIDTH as uint * HEIGHT as uint;
 pub static mut curr_x: u16 = 0;
 pub static mut curr_y: u16 = 0;
 
-pub static mut fg_color: Color = Green;
-pub static mut bg_color: Color = Black;
+pub static DEFAULT_FG: Color = Green;
+pub static DEFAULT_BG: Color = Black;
 
 pub enum Color {
     Black       = 0,
@@ -41,7 +41,6 @@ struct Display {
   screen: *mut VGA
 }
 
-
 pub static DISPLAY: Display = Display { screen: ADDRESS as *mut VGA };
 
 // One char in the screen is composed by 2 bytes, 1 byte for the character itself
@@ -55,20 +54,14 @@ impl Char {
   pub fn new(c: char, fg: Color, bg: Color) -> Char {
     Char { char: c as u8, style: fg as u8 | (bg as u8 << 4) }
   }
-}
-
-
-
-pub fn make_vgaentry(c: u8, fg: Color, bg: Color) -> u16 {
-  let color = fg as u16 | (bg as u16 << 4);
-  return c as u16 | (color << 8);
-}
-
-pub fn clear_screen(background: Color) {
-  for i in range(0, SCREEN_SIZE) {
-    unsafe {
-        *((0xb8000 + i * 2) as *mut u16) = (background as u16) << 12;
-    }
+  pub fn new_char(c: char) -> Char {
+    Char { char: c as u8, style: DEFAULT_FG as u8 | (DEFAULT_BG as u8 << 4) }
   }
+}
+
+
+
+pub fn make_vgaentry(c: Char) -> u16 {
+  return c.char as u16 | (c.style as u16 << 8);
 }
 

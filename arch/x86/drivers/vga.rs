@@ -12,6 +12,19 @@ pub static SCREEN_SIZE: uint = WIDTH as uint * HEIGHT as uint;
 pub static DEFAULT_FG: Color = Green;
 pub static DEFAULT_BG: Color = Black;
 
+static mut display: Display = Display { x: 0, y: 0 };
+
+pub fn putchar(c: Char) {
+    unsafe { display.putchar(c); }
+}
+
+pub fn newline() {
+    unsafe {
+        display.x = 0;
+        display.y += 1;
+    }
+}
+
 pub enum Color {
     Black       = 0,
     Blue        = 1,
@@ -40,7 +53,7 @@ struct Display {
 }
 
 impl Display {
-    pub fn putchar(&mut self, c: Char) {
+    fn putchar(&mut self, c: Char) {
         if self.x >= WIDTH || self.y >= HEIGHT {
             return;
         }
@@ -55,8 +68,6 @@ impl Display {
         }
     }
 }
-
-pub static mut display: Display = Display { x: 0, y: 0 };
 
 // One char in the screen is composed by 2 bytes, 1 byte for the character itself
 // and another for styling(foreground and background).

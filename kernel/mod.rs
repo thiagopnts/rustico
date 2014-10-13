@@ -3,7 +3,7 @@ use platform::io;
 
 #[no_mangle]
 pub fn kmain() -> int {
-  io::write("olar");
+  io::write("olar.meu.amigo");
   0
 }
 

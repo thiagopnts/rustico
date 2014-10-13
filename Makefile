@@ -6,7 +6,7 @@ NASM=nasm
 NASMFLAGS=-f elf -o
 QEMU=qemu-system-i386
 
-.PHONY: run clean disk.img
+.PHONY: compile run clean disk.img
 
 run: disk.img
 	tmux split-window -h "$(QEMU) -hda $< -curses -monitor telnet:localhost:4444,server -s -S"
@@ -19,7 +19,7 @@ clean:
 	rm lib.o
 
 kernel.elf: arch/x86/boot/start.o lib.o
-	$(LD) $(LDFLAGS) arch/x86/boot/new_linker.ld -o $@ $^
+	$(LD) $(LDFLAGS) arch/x86/boot/linker.ld -o $@ $^
 
 disk.img: kernel.elf
 	sudo mount -o loop,offset=32256 disk.img /mnt

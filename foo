@@ -1,0 +1,7 @@
+grub --device-map=/dev/null << eof
+device (hd0) ./disk.img
+geometry (hd0) 62 66 1
+root (hd0,0)
+setup (hd0)
+quit
+eof

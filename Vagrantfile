@@ -103,10 +103,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
     echo 2 | sudo update-alternatives --config gcc
     su vagrant
-    git clone https://github.com/thiagopnts/.vim.git /home/vagrant/.vim
-    ln -s /home/vagrant/.vim/vimrc /home/vagrant/.vimrc
     curl -s http://static.rust-lang.org/rustup.sh | sudo sh
     git clone https://github.com/rust-lang/rust.git /home/vagrant/rust
+    
     cd /home/vagrant/rust
     sudo mkdir -p /usr/local/lib/rustlib/i386-intel-linux/lib
     sudo /usr/local/bin/rustc --target i386-intel-linux -O -Z no-landing-pads src/libcore/lib.rs --out-dir /usr/local/lib/rustlib/i386-intel-linux/lib

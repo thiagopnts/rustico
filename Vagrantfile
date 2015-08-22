@@ -103,6 +103,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
     echo 2 | sudo update-alternatives --config gcc
     su vagrant
+    git clone https://github.com/raspberrypi/tools.git /home/vagrant/tools
     curl -s http://static.rust-lang.org/rustup.sh | sudo sh
     git clone https://github.com/rust-lang/rust.git /home/vagrant/rust
     

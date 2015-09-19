@@ -106,7 +106,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     git clone https://github.com/raspberrypi/tools.git /home/vagrant/tools
     git clone https://github.com/thiagopnts/.vim.git /home/vagrant/.vim
     ln -s /home/vagrant/.vim/vimrc /home/vagrant/.vimrc
-    curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --channel=beta --disable-sudo --yes
+    curl -sSf https://static.rust-lang.org/rustup.sh | sudo sh -s -- --channel=beta --yes
     git clone https://github.com/rust-lang/rust.git /home/vagrant/rust
 
     cd /home/vagrant/rust

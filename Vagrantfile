@@ -104,9 +104,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     echo 2 | sudo update-alternatives --config gcc
     su vagrant
     git clone https://github.com/raspberrypi/tools.git /home/vagrant/tools
-    curl -s http://static.rust-lang.org/rustup.sh | sudo sh
+    git clone https://github.com/thiagopnts/.vim.git /home/vagrant/.vim
+    ln -s /home/vagrant/.vim/vimrc /home/vagrant/.vimrc
+    curl -sSf https://static.rust-lang.org/rustup.sh | sh -s -- --channel=beta --disable-sudo --yes
     git clone https://github.com/rust-lang/rust.git /home/vagrant/rust
-    
+
     cd /home/vagrant/rust
     sudo mkdir -p /usr/local/lib/rustlib/i386-intel-linux/lib
     sudo /usr/local/bin/rustc --target i386-intel-linux -O -Z no-landing-pads src/libcore/lib.rs --out-dir /usr/local/lib/rustlib/i386-intel-linux/lib

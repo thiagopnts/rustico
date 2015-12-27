@@ -109,9 +109,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     curl -sSf https://static.rust-lang.org/rustup.sh | sudo sh -s -- --channel=beta --yes
     git clone https://github.com/rust-lang/rust.git /home/vagrant/rust
 
+    export PATH=/home/vagrant/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin:$PATH
+
     cd /home/vagrant/rust
     sudo mkdir -p /usr/local/lib/rustlib/i386-intel-linux/lib
     sudo /usr/local/bin/rustc --target i386-intel-linux -O -Z no-landing-pads src/libcore/lib.rs --out-dir /usr/local/lib/rustlib/i386-intel-linux/lib
+    sudo /usr/local/bin/rustc --target arm-unknown-linux-gnueabihf -O -Z no-landing-pads src/libcore/lib.rs --out-dir /usr/local/lib/rustlib/arm-unknown-linux-gnueabihf/lib
   }
 
 

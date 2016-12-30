@@ -1,8 +1,7 @@
 use platform::drivers::vga;
-use core::option::{Some, None};
+use core::option::Option;
 use core::{slice, str};
 use core::iter::Iterator;
-use core::str::StrSlice;
 
 pub fn putc(c: u8) {
     vga::putchar(vga::Char::new_char(c as char));

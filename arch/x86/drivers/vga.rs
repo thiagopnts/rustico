@@ -2,15 +2,11 @@
 use core::option::*;
 use core::mem::transmute;
 use core::{str, slice};
-use core::iter::range;
 
-pub static ADDRESS: uint = 0xb8000;
+pub static ADDRESS: usize = 0xb8000;
 pub static WIDTH: u16 = 80;
 pub static HEIGHT: u16 = 25;
-pub static SCREEN_SIZE: uint = WIDTH as uint * HEIGHT as uint;
 
-pub static DEFAULT_FG: Color = Green;
-pub static DEFAULT_BG: Color = Black;
 
 static mut display: Display = Display { x: 0, y: 0 };
 
@@ -25,6 +21,8 @@ pub fn newline() {
     }
 }
 
+
+#[derive(Clone)]
 pub enum Color {
     Black       = 0,
     Blue        = 1,
@@ -45,7 +43,7 @@ pub enum Color {
 }
 
 // The screen resolution is 80x25, the root address is 0xb8000
-type VGA = [Char, ..SCREEN_SIZE];
+type VGA = [Char; 2000];
 
 struct Display {
     pub y: u16,
@@ -57,7 +55,7 @@ impl Display {
         if self.x >= WIDTH || self.y >= HEIGHT {
             return;
         }
-        let idx : uint =  (self.y * WIDTH * 2 + self.x * 2) as uint;
+        let idx : usize =  (self.y * WIDTH * 2 + self.x * 2) as usize;
         unsafe {
             *((ADDRESS + idx) as *mut u16) = c.as_vga_entry();
         }
@@ -78,15 +76,17 @@ pub struct Char {
 
 impl Char {
   pub fn new(c: char, fg: Color, bg: Color) -> Char {
-    Char { char: c as u8, style: fg as u8 | (bg as u8 << 4) }
+    Char { char: c as u8, style: fg as u8 | (bg as u8) << 4 }
   }
 
   pub fn new_char(c: char) -> Char {
-    Char { char: c as u8, style: DEFAULT_FG as u8 | (DEFAULT_BG as u8 << 4) }
+    let DEFAULT_FG: Color = Color::Green;
+    let DEFAULT_BG: Color = Color::Black;
+    Char { char: c as u8, style: DEFAULT_FG as u8 | (DEFAULT_BG as u8) << 4 }
   }
 
   pub fn as_vga_entry(&self) -> u16 {
-    self.char as u16 | (self.style as u16 << 8)
+    self.char as u16 | (self.style as u16) << 8
   }
 }
 

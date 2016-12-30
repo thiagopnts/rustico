@@ -3,7 +3,6 @@
 #![allow(ctypes)]
 #![feature(globs)]
 #![no_std]
-extern crate core;
 
 use platform::io;
 

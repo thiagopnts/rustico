@@ -1,7 +1,7 @@
 LD=ld
 LDFLAGS=-m elf_i386 --entry=_start -nostdlib -T
 RUSTC=rustc
-RUSTCFLAGS=-O --target i386-intel-linux -Z no-landing-pads --emit=obj -o
+RUSTCFLAGS=-O --target i686-unknown-linux-gnu -Z no-landing-pads --emit=obj -o
 NASM=nasm
 NASMFLAGS=-f elf -o
 QEMU=qemu-system-i386

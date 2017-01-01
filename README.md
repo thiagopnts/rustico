@@ -9,13 +9,12 @@ It prints 'olar mundo' then hangs. That's it:
 ## Setup
 
 With [docker](https://www.docker.com/) installed run:
-
-```bash
-## Running it
 ```bash
 $ docker build -t rustico .
 ```
 
+## Running it
 
-$ docker run -it --privileged rustico make run
+```bash
+$ docker run -it --privileged -v $(pwd):/kernel rustico make run
 ```

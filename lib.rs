@@ -1,4 +1,4 @@
-#![crate_name = "rustic"]
+#![crate_name = "rustico"]
 #![crate_type = "lib"]
 #![allow(ctypes)]
 #![feature(globs)]

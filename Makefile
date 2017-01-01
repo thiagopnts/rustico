@@ -9,10 +9,7 @@ QEMU=qemu-system-i386
 .PHONY: compile run clean disk.img
 
 run: disk.img
-	tmux split-window -h "$(QEMU) -hda $< -curses -monitor telnet:localhost:4444,server -s -S"
-	tmux select-pane -L
-	sleep 1
-	telnet localhost 4444
+	$(QEMU) -hda $< -curses
 
 clean:
 	rm -f arch/x86/boot/*.bin arch/x86/boot/*.o arch/x86/boot/*.img
@@ -22,9 +19,9 @@ kernel.elf: arch/x86/boot/start.o lib.o
 	$(LD) $(LDFLAGS) arch/x86/boot/linker.ld -o $@ $^
 
 disk.img: kernel.elf
-	sudo mount -o loop,offset=32256 disk.img /mnt
-	sudo mv kernel.elf /mnt/boot/
-	sudo umount /mnt
+	mount -o loop,offset=32256 disk.img /mnt
+	mv kernel.elf /mnt/boot/
+	umount /mnt
 
 %.o: %.asm
 	$(NASM) $(NASMFLAGS) $@ $<
